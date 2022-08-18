@@ -22,5 +22,6 @@ namespace ProgrammersBlog.Entities.Concrete
         public string SeoTags { get; set; }
         public Category Category { get; set; }
         public User User { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

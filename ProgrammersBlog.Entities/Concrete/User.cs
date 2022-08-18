@@ -16,6 +16,8 @@ namespace ProgrammersBlog.Entities.Concrete
         public byte[] PasswordHash { get; set; }
         public string UserName { get; set; }        
         public Role Role { get; set; }
+        public string Picture { get; set; }
+        public string Description { get; set; }
         public ICollection<Article> Articles { get; set; }
     }
 }
