@@ -5,14 +5,15 @@ using ProgrammersBlog.Shared.Data.Concrete.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProgrammersBlog.Data.Concrete
+namespace ProgrammersBlog.Data.Concrete.EntityFramework.Repositories
 {
-    public class RoleRepository : EfEntityRepositoryBase<Role>, IRoleRepository
+    public class EfArticleRepository : EfEntityRepositoryBase<Article>, IArticleRepository
     {
-        public RoleRepository(DbContext context) : base(context)
+        public EfArticleRepository(DbContext context) : base(context)
         {
         }
     }
