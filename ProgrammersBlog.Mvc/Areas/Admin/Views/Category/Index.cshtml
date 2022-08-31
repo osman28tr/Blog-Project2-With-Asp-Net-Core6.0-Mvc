@@ -1,0 +1,73 @@
+﻿@using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes
+@model ProgrammersBlog.Entities.Dtos.CategoryListDto
+@{
+	Layout = "_Layout";
+	ViewBag.Title = "Kategoriler Index";
+}
+@if (Model.ResultStatus == ResultStatus.Success)
+{
+	<div class="card mb-4">
+		<div class="card-header">
+			<i class="fas fa-table mr-1"></i>
+			DataTable Example
+		</div>
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="categoriesTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Kategori Adı</th>
+							<th>Açıklaması</th>
+							<th>Aktif Mi?</th>
+							<th>Silindi Mi?</th>
+							<th>Not</th>
+							<th>Oluşturulma Tarihi</th>
+							<th>Oluşturan Kullanıcı Adı</th>
+							<th>Son Düzenlenme Tarihi</th>
+							<th>Son Düzenleyen Kullanıcı Adı</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th>ID</th>
+							<th>Kategori Adı</th>
+							<th>Açıklaması</th>
+							<th>Aktif Mi?</th>
+							<th>Silindi Mi?</th>
+							<th>Not</th>
+							<th>Oluşturulma Tarihi</th>
+							<th>Oluşturan Kullanıcı Adı</th>
+							<th>Son Düzenlenme Tarihi</th>
+							<th>Son Düzenleyen Kullanıcı Adı</th>
+						</tr>
+					</tfoot>
+					<tbody>
+						@foreach (var category in Model.Categories)
+						{
+							<tr>
+								<td>@category.Id</td>
+								<td>@category.Name</td>
+								<td>@category.Description</td>
+								<td>@category.IsActive</td>
+								<td>@category.IsDeleted</td>
+								<td>@category.Note</td>
+								<td>@category.CreatedDate.ToShortDateString()</td>
+								<td>@category.CreatedByName</td>
+								<td>@category.ModifiedDate.ToShortDateString()</td>
+								<td>@category.ModifiedByName</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+}
+@section Scripts{
+	<script>
+		$(document).ready(function () {
+			$('#categoriesTable').DataTable();
+		});
+	</script>
+}
