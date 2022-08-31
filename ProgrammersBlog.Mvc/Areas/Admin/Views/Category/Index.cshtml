@@ -64,6 +64,13 @@
 		</div>
 	</div>
 }
+@if (Model.ResultStatus == ResultStatus.Error)
+{
+	<div class="alert alert-danger mt-3">
+		@Model.Message <br/>
+		Dashboard sayfasına geri dönmek için lütfen <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="AdminIndex">tıklayınız</a>
+	</div>
+}
 @section Scripts{
 	<script>
 		$(document).ready(function () {
