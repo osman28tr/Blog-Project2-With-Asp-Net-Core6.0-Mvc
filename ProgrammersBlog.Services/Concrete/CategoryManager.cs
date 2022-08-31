@@ -28,8 +28,8 @@ namespace ProgrammersBlog.Services.Concrete
             var category = _mapper.Map<Category>(categoryAddDto);
             category.CreatedByName = createdByName;
             category.ModifiedByName = createdByName;
-            await _unitOfWork.Categories.AddAsync(category).ContinueWith(t => _unitOfWork.SaveAsync());
-            //await _unitOfWork.SaveAsync();
+            await _unitOfWork.Categories.AddAsync(category);
+            await _unitOfWork.SaveAsync();
             return new Result(ResultStatus.Success, $"{categoryAddDto.Name} adlı kategori başarı ile eklenmiştir.");
         }
 
@@ -42,7 +42,8 @@ namespace ProgrammersBlog.Services.Concrete
                 category.ModifiedByName = modifiedByName;
                 category.ModifiedDate = DateTime.Now;
 
-                await _unitOfWork.Categories.UpdateAsync(category).ContinueWith(x => _unitOfWork.SaveAsync());
+                await _unitOfWork.Categories.UpdateAsync(category);
+                await _unitOfWork.SaveAsync();
                 return new Result(ResultStatus.Success, $"{category.Name} adlı kategori başarı ile silinmiştir.");
             }
             return new Result(ResultStatus.Error, "Böyle bir kategori bulunamadı");
@@ -108,7 +109,8 @@ namespace ProgrammersBlog.Services.Concrete
         {
             var category = _mapper.Map<Category>(categoryUpdateDto);
             category.ModifiedByName = modifiedByName;
-            await _unitOfWork.Categories.UpdateAsync(category).ContinueWith(x => _unitOfWork.SaveAsync());
+            await _unitOfWork.Categories.UpdateAsync(category);
+            await _unitOfWork.SaveAsync();
             return new Result(ResultStatus.Success, $"{categoryUpdateDto.Name} adlı kategori başarı ile güncellenmiştir.");
         }
     }
