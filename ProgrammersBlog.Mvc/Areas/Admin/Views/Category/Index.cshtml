@@ -98,7 +98,47 @@
 						text: 'Yenile',
 						className: 'btn btn-warning',
 						action: function (e, dt, node, config) {
-							alert('Yenile butonuna basıldı.');
+							$.ajax({
+								type:'GET',
+								url: '@Url.Action("GetAllCategories","Category")',
+								contentType:"application/json",
+								beforeSend:function(){
+									$('#categoriesTable').hide();
+									$('.spinner-border').show();
+								},
+								success:function(data){
+									const categoryListDto=jQuery.parseJSON(data);
+									console.log(categoryListDto);
+									if(categoryListDto.ResultStatus===0){
+										let tableBody="";
+										$.each(categoryListDto.Categories.$values,function(index,category){
+											tableBody+=`
+													<tr>
+														<td>${category.Id}</td>
+														<td>${category.Name}</td>
+														<td>${category.Description}</td>
+														<td>${category.IsActive}</td>
+														<td>${category.IsDeleted}</td>
+														<td>${category.Note}</td>
+														<td>${convertToShortDate(category.CreatedDate)}</td>
+														<td>${category.CreatedByName}</td>
+														<td>${convertToShortDate(category.ModifiedDate)}</td>
+														<td>${category.ModifiedByName}</td>
+											</tr>`;
+										});
+										$('#categoriesTable > tbody').replaceWith(tableBody);
+										$('.spinner-border').hide();
+										$('#categoriesTable').fadeIn(1400);
+									}
+									else{
+										toastr.error(`${categoryListDto.Message}`, 'İşlem Başarısız!');
+									}
+								},
+								error:function(err){
+									console.log(err);
+									toastr.error(`${err.statusText}`, 'İşlem Başarısız!');
+								}
+							});
 						}
 					}
 				],
