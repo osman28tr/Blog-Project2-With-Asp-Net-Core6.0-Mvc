@@ -105,42 +105,42 @@
 						className: 'btn btn-warning',
 						action: function (e, dt, node, config) {
 							$.ajax({
-								type:'GET',
+								type: 'GET',
 								url: '@Url.Action("GetAllCategories","Category")',
-								contentType:"application/json",
-								beforeSend:function(){
+								contentType: "application/json",
+								beforeSend: function () {
 									$('#categoriesTable').hide();
 									$('.spinner-border').show();
 								},
-								success:function(data){
-									const categoryListDto=jQuery.parseJSON(data);
+								success: function (data) {
+									const categoryListDto = jQuery.parseJSON(data);
 									console.log(categoryListDto);
-									if(categoryListDto.ResultStatus===0){
-										let tableBody="";
-										$.each(categoryListDto.Categories.$values,function(index,category){
-											tableBody+=`
-													<tr>
-														<td>${category.Id}</td>
-														<td>${category.Name}</td>
-														<td>${category.Description}</td>
-														<td>${category.IsActive}</td>
-														<td>${category.IsDeleted}</td>
-														<td>${category.Note}</td>
-														<td>${convertToShortDate(category.CreatedDate)}</td>
-														<td>${category.CreatedByName}</td>
-														<td>${convertToShortDate(category.ModifiedDate)}</td>
-														<td>${category.ModifiedByName}</td>
-											</tr>`;
+									if (categoryListDto.ResultStatus === 0) {
+										let tableBody = "";
+										$.each(categoryListDto.Categories.$values, function (index, category) {
+											tableBody += `
+															<tr>
+																<td>${category.Id}</td>
+																<td>${category.Name}</td>
+																<td>${category.Description}</td>
+																<td>${category.IsActive}</td>
+																<td>${category.IsDeleted}</td>
+																<td>${category.Note}</td>
+																<td>${convertToShortDate(category.CreatedDate)}</td>
+																<td>${category.CreatedByName}</td>
+																<td>${convertToShortDate(category.ModifiedDate)}</td>
+																<td>${category.ModifiedByName}</td>
+													</tr>`;
 										});
 										$('#categoriesTable > tbody').replaceWith(tableBody);
 										$('.spinner-border').hide();
 										$('#categoriesTable').fadeIn(1400);
 									}
-									else{
+									else {
 										toastr.error(`${categoryListDto.Message}`, 'İşlem Başarısız!');
 									}
 								},
-								error:function(err){
+								error: function (err) {
 									console.log(err);
 									toastr.error(`${err.statusText}`, 'İşlem Başarısız!');
 								}
@@ -203,18 +203,18 @@
 							if (isValid) {
 								placeHolderDiv.find('.modal').modal('hide');
 								const newTableRow = `
-									<tr>
-										<td>${categoryAddAjaxModel.CategoryDto.Category.Id}</td>
-										<td>${categoryAddAjaxModel.CategoryDto.Category.Name}</td>
-										<td>${categoryAddAjaxModel.CategoryDto.Category.Description}</td>
-										<td>${categoryAddAjaxModel.CategoryDto.Category.IsActive}</td>
-										<td>${categoryAddAjaxModel.CategoryDto.Category.IsDeleted}</td>
-										<td>${categoryAddAjaxModel.CategoryDto.Category.Note}</td>
-										<td>${convertToShortDate(categoryAddAjaxModel.CategoryDto.Category.CreatedDate)}</td>
-										<td>${categoryAddAjaxModel.CategoryDto.Category.CreatedByName}</td>
-										<td>${convertToShortDate(categoryAddAjaxModel.CategoryDto.Category.ModifiedDate)}</td>
-										<td>${categoryAddAjaxModel.CategoryDto.Category.ModifiedByName}</td>
-									</tr>`;
+											<tr>
+												<td>${categoryAddAjaxModel.CategoryDto.Category.Id}</td>
+												<td>${categoryAddAjaxModel.CategoryDto.Category.Name}</td>
+												<td>${categoryAddAjaxModel.CategoryDto.Category.Description}</td>
+												<td>${categoryAddAjaxModel.CategoryDto.Category.IsActive}</td>
+												<td>${categoryAddAjaxModel.CategoryDto.Category.IsDeleted}</td>
+												<td>${categoryAddAjaxModel.CategoryDto.Category.Note}</td>
+												<td>${convertToShortDate(categoryAddAjaxModel.CategoryDto.Category.CreatedDate)}</td>
+												<td>${categoryAddAjaxModel.CategoryDto.Category.CreatedByName}</td>
+												<td>${convertToShortDate(categoryAddAjaxModel.CategoryDto.Category.ModifiedDate)}</td>
+												<td>${categoryAddAjaxModel.CategoryDto.Category.ModifiedByName}</td>
+											</tr>`;
 								const newTableRowObject = $(newTableRow);
 								newTableRowObject.hide();
 								$('#categoriesTable').append(newTableRowObject);
@@ -232,6 +232,66 @@
 						});
 					});
 				});
+			$(document).on('click', '.btn-delete', function (event) {
+				event.preventDefault();
+				const id=$(this).attr('data-id');
+				const swalWithBootstrapButtons = Swal.mixin({
+					customClass: {
+						confirmButton: 'btn btn-success',
+						cancelButton: 'btn btn-danger'
+					},
+					buttonsStyling: false
+				})
+
+				swalWithBootstrapButtons.fire({
+					title: 'Silmek istediğinize emin misiniz?',
+					text: "Seçili kategori silinecektir!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Evet, silmek istiyorum.',
+					cancelButtonText: 'Hayır, silmek istemiyorum.',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+						$.ajax({
+							type:'POST',
+							dataType:'json',
+							data:{categoryId:id},
+							url:'@Url.Action("Delete","Category")',
+							success:function(data){
+								const result=jQuery.parseJSON(data);
+								if(result.ResultStatus===0){//backend tarafında hata oluşmuş olabilir.
+									swalWithBootstrapButtons.fire(
+										'Silindi!',
+										'Seçili kategori başarıyla silinmiştir.',
+										'success'
+									);
+									const tableRow=$(`[name="${id}"]`);
+									tableRow.fadeOut(3500);
+								}
+								else{
+									Swal.fire({
+										icon: 'error',
+										title: 'Bir hata oluştu!',
+										text: `${result.Message}`,
+									})
+								}
+							},
+							error:function(err){
+								console.log(err);
+							}
+						});
+					} else if (
+						result.dismiss === Swal.DismissReason.cancel
+					) {
+						swalWithBootstrapButtons.fire(
+							'İptal edildi!',
+							'Seçili kategori silinmedi :)',
+							'error'
+						);
+					}
+				})
+			});
 		});
 	</script>
 }
