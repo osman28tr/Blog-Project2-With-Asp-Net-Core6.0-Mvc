@@ -46,8 +46,8 @@
 																		<td>${convertToShortDate(category.ModifiedDate)}</td>
 																		<td>${category.ModifiedByName}</td>
 																		<td>
-											<button class="btn btn-primary btn-sm btn-block"><span class="fas fa-minus-edit"></span>Düzenle</button>
-											<button class="btn btn-danger btn-sm btn-block btn-delete" data-id="${category.Id}"><span class="fas fa-minus-circle"></span>Sil</button>
+											<button class="btn btn-primary btn-sm"><span class="fas fa-minus-edit"></span>Düzenle</button>
+											<button class="btn btn-danger btn-sm btn-delete" data-id="${category.Id}"><span class="fas fa-minus-circle"></span>Sil</button>
 										</td>
 															</tr>`;
 								});
@@ -137,8 +137,8 @@
 														<td>${convertToShortDate(categoryAddAjaxModel.CategoryDto.Category.ModifiedDate)}</td>
 														<td>${categoryAddAjaxModel.CategoryDto.Category.ModifiedByName}</td>
 														<td>
-															<button class="btn btn-primary btn-sm btn-block"><span class="fas fa-minus-edit"></span>Düzenle</button>
-															<button class="btn btn-danger btn-sm btn-block btn-delete" data-id="${categoryAddAjaxModel.Id}"><span class="fas fa-minus-circle"></span>Sil</button>
+															<button class="btn btn-primary btn-sm "><span class="fas fa-minus-edit"></span>Düzenle</button>
+															<button class="btn btn-danger btn-sm btn-delete" data-id="${categoryAddAjaxModel.Id}"><span class="fas fa-minus-circle"></span>Sil</button>
 														</td>
 													</tr>`;
 					const newTableRowObject = $(newTableRow);
@@ -219,6 +219,20 @@
 					'error'
 				);
 			}
+		});
+	});
+	$(function () {
+		const url = '/Admin/Category/Update/';
+		const placeHolderDiv = $('#modalPlaceHolder');
+		$(document).on('click', '.btn-update', function (event) {
+			event.preventDefault();
+			const id = $(this).attr('data-id');
+			$.get(url, { categoryId: id }).done(function (data) {
+				placeHolderDiv.html(data);
+				placeHolderDiv.find('.modal').modal('show');
+			}).fail(function () {
+				toastr.error("Bir hata oluştu.");
+            });
 		});
 	});
 });
