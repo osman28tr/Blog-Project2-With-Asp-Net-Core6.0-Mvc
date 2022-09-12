@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProgrammersBlog.Data.Concrete.EntityFramework.Mappings;
 using ProgrammersBlog.Entities.Concrete;
 using System;
@@ -9,13 +10,11 @@ using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Data.Concrete.EntityFramework.Contexts
 {
-    public class ProgrammersBlogContext:DbContext
+    public class ProgrammersBlogContext:IdentityDbContext<User,Role,int>
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-7LR4Q85\SQLEXPRESS;Database=ProgrammersBlog;Trusted_Connection=True;Connect Timeout=30;MultipleActiveResultSets=True;");
