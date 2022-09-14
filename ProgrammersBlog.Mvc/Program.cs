@@ -24,7 +24,7 @@ builder.Services.ConfigureApplicationCookie(options =>
         Name = "ProgrammersBlog",
         HttpOnly = true,
         SameSite = SameSiteMode.Strict,
-        SecurePolicy = CookieSecurePolicy.SameAsRequest
+        SecurePolicy = CookieSecurePolicy.Always
     };
     options.SlidingExpiration = true; //kullanýcýnýn oturum açýk kalma süresi
     options.ExpireTimeSpan = System.TimeSpan.FromDays(7);
