@@ -12,7 +12,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonO
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve; //iç içe nesnelerin birbirini referansýnda sýkýntý olmamasý için(yenile butonu)
 });
 
-
+builder.Services.AddSession();
 builder.Services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile));
 builder.Services.LoadMyServices();
 var app = builder.Build();
@@ -22,10 +22,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStatusCodePages();
+app.UseSession();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
