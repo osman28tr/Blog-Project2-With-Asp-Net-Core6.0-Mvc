@@ -15,6 +15,21 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonO
 builder.Services.AddSession();
 builder.Services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile));
 builder.Services.LoadMyServices();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = new PathString("/Admin/User/Login");
+    options.LogoutPath = new PathString("/Admin/User/LogOut");
+    options.Cookie = new CookieBuilder
+    {
+        Name = "ProgrammersBlog",
+        HttpOnly = true,
+        SameSite = SameSiteMode.Strict,
+        SecurePolicy = CookieSecurePolicy.SameAsRequest
+    };
+    options.SlidingExpiration = true; //kullanýcýnýn oturum açýk kalma süresi
+    options.ExpireTimeSpan = System.TimeSpan.FromDays(7);
+    options.AccessDeniedPath = new PathString("/Admin/User/AccessDenied");
+});
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
