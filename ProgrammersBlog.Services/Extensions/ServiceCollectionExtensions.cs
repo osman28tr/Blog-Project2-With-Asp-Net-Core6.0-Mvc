@@ -18,7 +18,20 @@ namespace ProgrammersBlog.Services.Extensions
         public static IServiceCollection LoadMyServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddDbContext<ProgrammersBlogContext>();
-            serviceCollection.AddIdentity<User,Role>().AddEntityFrameworkStores<ProgrammersBlogContext>();
+            serviceCollection.AddIdentity<User, Role>(options =>
+            {
+                //Kullanıcı şifre ayaları
+                options.Password.RequireDigit = false; //şifrelerde rakam zorunlu mu
+                options.Password.RequiredLength = 5;
+                options.Password.RequiredUniqueChars = 0; //şifrelerde özel karakterlerin bulunma sayısı
+                options.Password.RequireNonAlphanumeric = false; //özel karakterlerin zorunlu olup olmaması
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                //Kullanıcı adı ve mail ayarları
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+"; //kullanıcı adının içereceği karakterler.
+                options.User.RequireUniqueEmail = true; //sistemde ilgili mail sadece 1 tane bulunur.
+                
+            }).AddEntityFrameworkStores<ProgrammersBlogContext>();
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
             serviceCollection.AddScoped<ICategoryService, CategoryManager>();
             serviceCollection.AddScoped<IArticleService, ArticleManager>();
