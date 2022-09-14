@@ -104,7 +104,7 @@
 	/* Datatables ends here */
 
 	$(function () {
-		const url = '/Admin/Category/Add/'
+		const url = '/Admin/User/Add/'
 		const placeHolderDiv = $('#modalPlaceHolder');
 		$('#btnAdd').click(function () {
 			$.get(url).done(function (data) {
