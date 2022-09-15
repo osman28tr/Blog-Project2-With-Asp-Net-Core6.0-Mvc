@@ -1,3 +1,4 @@
+using ProgrammersBlog.Mvc.AutoMapper.Profiles;
 using ProgrammersBlog.Services.AutoMapper.Profiles;
 using ProgrammersBlog.Services.Extensions;
 using System.Text.Json;
@@ -13,7 +14,7 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonO
 });
 
 builder.Services.AddSession();
-builder.Services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile));
+builder.Services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile),typeof(UserProfile));
 builder.Services.LoadMyServices();
 builder.Services.ConfigureApplicationCookie(options =>
 {
