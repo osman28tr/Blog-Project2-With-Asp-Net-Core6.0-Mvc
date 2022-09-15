@@ -37,15 +37,15 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         {
             //~/img/123.jpg
             string wwwroot = _env.WebRootPath; //wwwroot dosya yolu
-            //string fileName = Path.GetFileNameWithoutExtension(userAddDto.Picture.FileName);//123
+            //string fileName = Path.GetFileNameWithoutExtension(userAddDto.PictureFile.FileName);//123
             //.jpg
-            string fileExtension = Path.GetExtension(userAddDto.Picture.FileName);
+            string fileExtension = Path.GetExtension(userAddDto.PictureFile.FileName);
             DateTime dateTime = DateTime.Now;
             string fileName = $"{userAddDto.UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
             var path = Path.Combine($"{wwwroot}/img", fileName); //path yolu oluşturuldu.
             await using(var stream=new FileStream(path, FileMode.Create)) //img ye kaydedildi.
             {
-                await userAddDto.Picture.CopyToAsync(stream); //picture prop'una kopyası verildi.
+                await userAddDto.PictureFile.CopyToAsync(stream); //picture prop'una kopyası verildi.
             }
             return fileName; //user_551_5_21_12_3_10_2022.jpg
         }
