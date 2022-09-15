@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Entities.Dtos;
+using ProgrammersBlog.Mvc.Areas.Admin.Models;
 using ProgrammersBlog.Shared.Utilities.Extensions;
 using ProgrammersBlog.Shared.Utilities.Results.ComplexTypes;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
 {
@@ -14,10 +19,12 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IWebHostEnvironment _env; //wwwroot dosyasının yolunu işletim sistemi değişse bile dinamik olarak almak için.
-        public UserController(UserManager<User> userManager, IWebHostEnvironment env)
+        private readonly IMapper _mapper;
+        public UserController(UserManager<User> userManager, IWebHostEnvironment env,IMapper mapper)
         {
             _userManager = userManager;
             _env = env;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -32,6 +39,50 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         public IActionResult Add()
         {
             return PartialView("_UserAddPartial");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(UserAddDto userAddDto)
+        {
+            if (ModelState.IsValid) //frontend valid
+            {
+                userAddDto.Picture = await ImageUpload(userAddDto);
+                var user = _mapper.Map<User>(userAddDto);
+                var result = await _userManager.CreateAsync(user, userAddDto.Password); 
+                if (result.Succeeded) //backend valid
+                {
+                    var userAddAjaxModel = System.Text.Json.JsonSerializer.Serialize(new UserAddAjaxViewModel
+                    {
+                        UserDto = new UserDto
+                        {
+                            ResultStatus = ResultStatus.Success,
+                            Message = $"{user.UserName} adlı kullanıcı adına sahip, kullanıcı " +
+                        $"başarıyla eklenmiştir.",
+                            User = user
+                        },
+                        UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
+                    });
+                    return Json(userAddAjaxModel);
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("  ", error.Description);
+                    }
+                    var userAddAjaxErrorModel = System.Text.Json.JsonSerializer.Serialize(new UserAddAjaxViewModel
+                    {
+                        UserAddDto = userAddDto,
+                        UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
+                    });
+                    return Json(userAddAjaxErrorModel); //frontend'e veriler döndü.
+                }            
+            }
+            var userAddAjaxModelStateErrorModel = System.Text.Json.JsonSerializer.Serialize(new UserAddAjaxViewModel
+            {
+                UserAddDto = userAddDto,
+                UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
+            });
+            return Json(userAddAjaxModelStateErrorModel);
         }
         public async Task<string> ImageUpload(UserAddDto userAddDto)
         {
