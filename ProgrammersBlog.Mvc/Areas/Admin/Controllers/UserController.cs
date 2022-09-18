@@ -20,7 +20,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IWebHostEnvironment _env; //wwwroot dosyasının yolunu işletim sistemi değişse bile dinamik olarak almak için.
         private readonly IMapper _mapper;
-        public UserController(UserManager<User> userManager, IWebHostEnvironment env,IMapper mapper)
+        public UserController(UserManager<User> userManager, IWebHostEnvironment env, IMapper mapper)
         {
             _userManager = userManager;
             _env = env;
@@ -61,7 +61,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             {
                 userAddDto.Picture = await ImageUpload(userAddDto);
                 var user = _mapper.Map<User>(userAddDto);
-                var result = await _userManager.CreateAsync(user, userAddDto.Password); 
+                var result = await _userManager.CreateAsync(user, userAddDto.Password);
                 if (result.Succeeded) //backend valid
                 {
                     var userAddAjaxModel = System.Text.Json.JsonSerializer.Serialize(new UserAddAjaxViewModel
@@ -89,7 +89,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                         UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
                     });
                     return Json(userAddAjaxErrorModel); //frontend'e veriler döndü.
-                }            
+                }
             }
             var userAddAjaxModelStateErrorModel = System.Text.Json.JsonSerializer.Serialize(new UserAddAjaxViewModel
             {
@@ -97,6 +97,36 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 UserAddPartial = await this.RenderViewToStringAsync("_UserAddPartial", userAddDto)
             });
             return Json(userAddAjaxModelStateErrorModel);
+        }
+        public async Task<JsonResult> Delete(int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                var deletedUser = System.Text.Json.JsonSerializer.Serialize(new UserDto
+                {
+                    ResultStatus = ResultStatus.Success,
+                    Message = $"{user.UserName} adlı kullanıcı başarıyla silinmiştir.",
+                    User = user
+                });
+                return Json(deletedUser);
+            }
+            else
+            {
+                string errorMessages = string.Empty;
+                foreach (var error in result.Errors)
+                {
+                    errorMessages = $"*{error.Description}\n";
+                }
+                var deletedUserErrorModel = System.Text.Json.JsonSerializer.Serialize(new UserDto
+                {
+                    ResultStatus = ResultStatus.Error,
+                    Message = $"{user.UserName} adlı kullanıcı silinirken bazı hatalar oluştu.\n{errorMessages}",
+                    User = user
+                });
+                return Json(deletedUserErrorModel);
+            }
         }
         public async Task<string> ImageUpload(UserAddDto userAddDto)
         {
@@ -108,7 +138,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             DateTime dateTime = DateTime.Now;
             string fileName = $"{userAddDto.UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
             var path = Path.Combine($"{wwwroot}/img", fileName); //path yolu oluşturuldu.
-            await using(var stream=new FileStream(path, FileMode.Create)) //img ye kaydedildi.
+            await using (var stream = new FileStream(path, FileMode.Create)) //img ye kaydedildi.
             {
                 await userAddDto.PictureFile.CopyToAsync(stream); //picture prop'una kopyası verildi.
             }
