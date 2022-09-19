@@ -151,6 +151,20 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             }
             return fileName; //user_551_5_21_12_3_10_2022.jpg
         }
+        public bool ImageDelete(string pictureName)
+        {
+            string wwwroot = _env.WebRootPath;
+            var fileToDelete = Path.Combine($"{wwwroot}/img", pictureName);
+            if (System.IO.File.Exists(fileToDelete))
+            {
+                System.IO.File.Delete(fileToDelete);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
 //password: aliyildiz123
