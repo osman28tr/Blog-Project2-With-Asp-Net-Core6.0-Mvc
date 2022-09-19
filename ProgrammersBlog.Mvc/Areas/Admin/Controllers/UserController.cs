@@ -57,7 +57,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(UserAddDto userAddDto)
         {
-            if (ModelState.IsValid) //frontend valid
+            if (ModelState.IsValid) //frontend valid annotations
             {
                 userAddDto.Picture = await ImageUpload(userAddDto);
                 var user = _mapper.Map<User>(userAddDto);
@@ -135,19 +135,72 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             var userUpdateDto = _mapper.Map<UserUpdateDto>(user);
             return PartialView("_UserUpdatePartial", userUpdateDto);
         }
-        public async Task<string> ImageUpload(UserAddDto userAddDto)
+        [HttpPost]
+        public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isNewPictureUploaded = false;
+                var oldUser = await _userManager.FindByIdAsync(userUpdateDto.Id.ToString());
+                var oldUserPicture = oldUser.Picture;
+                if (userUpdateDto.PictureFile != null)
+                {
+                    userUpdateDto.Picture = await ImageUpload(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                    isNewPictureUploaded = true;
+                }
+                var updatedUser = _mapper.Map<UserUpdateDto, User>(userUpdateDto, oldUser
+                    );
+                var result = await _userManager.UpdateAsync(updatedUser);
+                if (result.Succeeded)
+                {
+                    if (isNewPictureUploaded)
+                    {
+                        ImageDelete(oldUserPicture);
+                    }
+                    var userUpdateViewModel = System.Text.Json.JsonSerializer.Serialize(new UserUpdateAjaxViewModel
+                    {
+                        UserDto = new UserDto { ResultStatus = ResultStatus.Success, Message = $"{updatedUser.UserName} adlı kullanıcı başarıyla güncellenmiştir.", User = updatedUser },
+                        UserUpdatePartial = await this.RenderViewToStringAsync("_UserUpdatePartial", userUpdateDto)
+                    });
+                    return Json(userUpdateViewModel);
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    var userUpdateErrorViewModel = System.Text.Json.JsonSerializer.Serialize(new UserUpdateAjaxViewModel
+                    {
+                        UserUpdateDto = userUpdateDto,
+                        UserUpdatePartial = await this.RenderViewToStringAsync("_UserUpdatePartial", userUpdateDto)
+                    });
+                    return Json(userUpdateErrorViewModel);
+                }
+            }
+            else
+            {
+                var userUpdateModelStateErrorViewModel = System.Text.Json.JsonSerializer.Serialize(new UserUpdateAjaxViewModel
+                {
+                    UserUpdateDto = userUpdateDto,
+                    UserUpdatePartial = await this.RenderViewToStringAsync("_UserUpdatePartial", userUpdateDto)
+                });
+                return Json(userUpdateModelStateErrorViewModel);
+            }
+        }
+        public async Task<string> ImageUpload(string userName, IFormFile pictureFile)
         {
             //~/img/123.jpg
             string wwwroot = _env.WebRootPath; //wwwroot dosya yolu
-            //string fileName = Path.GetFileNameWithoutExtension(userAddDto.PictureFile.FileName);//123
+            //string fileName = Path.GetFileNameWithoutExtension(pictureFile.FileName);//123
             //.jpg
-            string fileExtension = Path.GetExtension(userAddDto.PictureFile.FileName);
+            string fileExtension = Path.GetExtension(pictureFile.FileName);
             DateTime dateTime = DateTime.Now;
-            string fileName = $"{userAddDto.UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
+            string fileName = $"{userName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
             var path = Path.Combine($"{wwwroot}/img", fileName); //path yolu oluşturuldu.
             await using (var stream = new FileStream(path, FileMode.Create)) //img ye kaydedildi.
             {
-                await userAddDto.PictureFile.CopyToAsync(stream); //picture prop'una kopyası verildi.
+                await pictureFile.CopyToAsync(stream); //picture prop'una kopyası verildi.
             }
             return fileName; //user_551_5_21_12_3_10_2022.jpg
         }
