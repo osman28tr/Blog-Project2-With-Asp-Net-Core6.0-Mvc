@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProgrammersBlog.Entities.Concrete;
 using System;
@@ -12,7 +13,7 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
     public class UserMap : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
-        {            
+        {
             builder.Property(x => x.Picture).IsRequired();
             builder.Property(x => x.Picture).HasMaxLength(250);
             // Primary key
@@ -48,6 +49,43 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
 
             // Each User can have many entries in the UserRole join table
             builder.HasMany<UserRole>().WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
+
+            var adminUser = new User()
+            {
+                Id = 1,
+                UserName = "adminuser",
+                NormalizedUserName = "ADMINUSER",
+                Email = "adminuser@gmail.com",
+                NormalizedEmail = "ADMINUSER@GMAIL.COM",
+                PhoneNumber = "+905555555555",
+                Picture = "defaultUser.png",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = new Guid().ToString()
+            };
+            adminUser.PasswordHash = CreatePasswordHash(adminUser, "adminuser");
+
+            var editorUser = new User()
+            {
+                Id = 2,
+                UserName = "editoruser",
+                NormalizedUserName = "EDITORUSER",
+                Email = "editoruser@gmail.com",
+                NormalizedEmail = "EDITORUSER@GMAIL.COM",
+                PhoneNumber = "+905555555555",
+                Picture = "defaultUser.png",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = new Guid().ToString()
+            };
+            editorUser.PasswordHash = CreatePasswordHash(editorUser, "editoruser");
+
+            builder.HasData(adminUser, editorUser);
+        }
+        private string CreatePasswordHash(User user, string password)
+        {
+            var passwordHasher = new PasswordHasher<User>();
+            return passwordHasher.HashPassword(user, password);
         }
     }
 }
