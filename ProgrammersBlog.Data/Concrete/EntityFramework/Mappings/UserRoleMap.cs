@@ -23,12 +23,12 @@ namespace ProgrammersBlog.Data.Concrete.EntityFramework.Mappings
                 new UserRole
                 {
                     UserId = 1,
-                    RoleId = 1,
+                    RoleId = 1
                 },
                 new UserRole
                 {
                     UserId = 2,
-                    RoleId = 2,
+                    RoleId = 2
                 });
         }
     }
