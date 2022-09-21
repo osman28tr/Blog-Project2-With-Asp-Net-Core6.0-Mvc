@@ -74,7 +74,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 return View("UserLogin");
             }           
         }
-        [Authorize]
+        
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -89,13 +89,13 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             });
             return Json(userListDto);
         }
-        [Authorize]
+        
         [HttpGet]
         public IActionResult Add()
         {
             return PartialView("_UserAddPartial");
         }
-        [Authorize]
+        
         [HttpPost]
         public async Task<IActionResult> Add(UserAddDto userAddDto)
         {
