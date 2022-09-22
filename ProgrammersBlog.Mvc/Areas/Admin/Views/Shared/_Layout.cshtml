@@ -42,7 +42,7 @@
         </nav>
         <div id="layoutSidenav">
             
-            @await Html.PartialAsync("_LayoutSidebarNavPartial")
+            @await Component.InvokeAsync("AdminMenu")
 
             <div id="layoutSidenav_content">
                 <main>
