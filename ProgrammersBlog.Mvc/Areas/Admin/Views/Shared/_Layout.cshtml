@@ -38,6 +38,12 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
+                        @if (TempData["SuccessMessage"]!=null)
+                    {
+                        <div class="alert alert-success mt-2" role="alert">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
                         @RenderBody()
                         </div>
                 </main>

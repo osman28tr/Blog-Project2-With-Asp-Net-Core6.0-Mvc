@@ -11,7 +11,7 @@
 				<h4 class="text-center"><span class="fas fa-edit"></span>Profil Düzenle</h4>
 			</div>
 			<div class="card-body">
-				<form asp-action="ChangeDetails" asp-controller="User" method="post" id="form-user-update">
+				<form asp-action="ChangeDetails" asp-controller="User" method="post" id="form-user-update" enctype="multipart/form-data">
                     <input asp-for="Id" type="hidden" />
                     <div asp-validation-summary="All" class="text-danger" id="validation-summary">
                     </div>
