@@ -304,6 +304,38 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> PasswordChange(UserPasswordChangeDto userPasswordChangeDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                var isVerified = await _userManager.CheckPasswordAsync(user, userPasswordChangeDto.CurrentPassword);
+                if (isVerified)
+                {
+                    var result = await _userManager.ChangePasswordAsync(user, userPasswordChangeDto.CurrentPassword, userPasswordChangeDto.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        await _userManager.UpdateSecurityStampAsync(user);
+                        await _signInManager.SignOutAsync();
+                        await _signInManager.PasswordSignInAsync(user, userPasswordChangeDto.NewPassword, true, false);
+                        TempData.Add("SuccessMessage", $"Şifreniz başarıyla değiştirilmiştir.");
+                        return View();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("","Lütfen girmiş olduğunuz şuanki şifrenizi kontrol ediniz.");
+                    return View(userPasswordChangeDto);
+                }
+            }
+            else
+            {
+                return View(userPasswordChangeDto);
+            }
+            return View();
+        }
         [Authorize(Roles = "Admin,Editor")]
         public async Task<string> ImageUpload(string userName, IFormFile pictureFile)
         {
@@ -339,4 +371,4 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
     }
 }
 //username: adminuser@gmail.com
-//password: adminuser
+//password: 123456
