@@ -56,7 +56,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("AdminIndex", "Home");
                     }
                     else
                     {
