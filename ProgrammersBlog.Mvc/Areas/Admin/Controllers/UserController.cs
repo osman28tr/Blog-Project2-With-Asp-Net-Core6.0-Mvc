@@ -20,13 +20,11 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly IWebHostEnvironment _env; //wwwroot dosyasının yolunu işletim sistemi değişse bile dinamik olarak almak için.
+        private readonly SignInManager<User> _signInManager;        
         private readonly IMapper _mapper;
         public UserController(UserManager<User> userManager, IWebHostEnvironment env, IMapper mapper, SignInManager<User> signInManager)
         {
             _userManager = userManager;
-            _env = env;
             _mapper = mapper;
             _signInManager = signInManager;
         }
@@ -346,19 +344,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         [Authorize(Roles = "Admin,Editor")]
         public async Task<string> ImageUpload(string userName, IFormFile pictureFile)
         {
-            //~/img/123.jpg
-            string wwwroot = _env.WebRootPath; //wwwroot dosya yolu
-            //string fileName = Path.GetFileNameWithoutExtension(pictureFile.FileName);//123
-            //.jpg
-            string fileExtension = Path.GetExtension(pictureFile.FileName);
-            DateTime dateTime = DateTime.Now;
-            string fileName = $"{userName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
-            var path = Path.Combine($"{wwwroot}/img", fileName); //path yolu oluşturuldu.
-            await using (var stream = new FileStream(path, FileMode.Create)) //img ye kaydedildi.
-            {
-                await pictureFile.CopyToAsync(stream); //picture prop'una kopyası verildi.
-            }
-            return fileName; //user_551_5_21_12_3_10_2022.jpg
+            
         }
         [Authorize(Roles = "Admin,Editor")]
         public bool ImageDelete(string pictureName)
