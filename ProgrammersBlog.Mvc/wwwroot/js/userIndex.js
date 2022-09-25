@@ -152,6 +152,7 @@
                 },
                 error: function (error) {
                     console.log(error);
+                    toastr.error(`${err.responseText}`, 'Hata!');
                 }
             });
         });
@@ -229,7 +230,7 @@
                 placeHolderDiv.html(data);
                 placeHolderDiv.find('.modal').modal('show');
             }).fail(function () {
-                toastr.error("Bir hata oluştu.");
+                toastr.error(`${err.responseText}`, 'Hata!');
             });
         });
 
@@ -286,6 +287,7 @@
                 },
                 error: function (error) {
                     console.log(error);
+                    toastr.error(`${err.responseText}`, 'Hata!');
                 }
             });
         });
