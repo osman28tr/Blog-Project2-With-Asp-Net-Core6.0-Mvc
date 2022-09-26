@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using ProgrammersBlog.Data.Abstract;
 using ProgrammersBlog.Data.Concrete;
 using ProgrammersBlog.Data.Concrete.EntityFramework.Contexts;
@@ -17,7 +18,7 @@ namespace ProgrammersBlog.Services.Extensions
     {
         public static IServiceCollection LoadMyServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddDbContext<ProgrammersBlogContext>();
+            serviceCollection.AddDbContext<ProgrammersBlogContext>(options=>options.UseSqlServer(Configuration.ConnectionString));
             serviceCollection.AddIdentity<User, Role>(options =>
             {
                 //Kullanıcı şifre ayaları
