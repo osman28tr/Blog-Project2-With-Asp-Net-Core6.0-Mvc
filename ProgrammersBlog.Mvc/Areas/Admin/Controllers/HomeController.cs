@@ -27,9 +27,9 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         }
         public async Task<IActionResult> AdminIndex()
         {
-            var categoriesCountResult = await _categoryService.CountByIsDeleted();
-            var articlesCountResult = await _articleService.CountByIsDeleted();
-            //var commentsCountResult = await _commentService.CountByIsDeleted();
+            var categoriesCountResult = await _categoryService.CountByNonDeleted();
+            var articlesCountResult = await _articleService.CountByNonDeleted();
+            //var commentsCountResult = await _commentService.CountByNonDeleted();
             var usersCount = await _userManager.Users.CountAsync();
             var articleResult = await _articleService.GetAll();
             if (categoriesCountResult.ResultStatus == ResultStatus.Success && articlesCountResult.ResultStatus == ResultStatus.Success && /*commentsCountResult.ResultStatus == ResultStatus.Success &&*/ usersCount > -1)

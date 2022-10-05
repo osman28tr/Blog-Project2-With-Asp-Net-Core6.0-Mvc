@@ -4,7 +4,7 @@
 	ViewBag.Title = "Yönetim Paneli";
 }
 @*<h1 class="mt-4">Dashboard</h1>*@
-<ol class="breadcrumb mb-4 mt-2">
+<ol class="breadcrumb mb-3 mt-2">
 	<li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="AdminIndex">Admin</a></li>
 	<li class="breadcrumb-item active"><a asp-area="Admin" asp-controller="Home" asp-action="AdminIndex">Yönetim Paneli</a></li>
 </ol>
@@ -108,7 +108,7 @@
 							<td>@article.Category.Name</td>
 							<td>@article.Title</td>
 							<td><img src="~/img/@article.Thumbnail" class="my-image-table" /></td>
-							<td>@article.Date.ToLongTimeString()</td>
+							<td>@article.Date.ToShortDateString()</td>
 							<td>@article.ViewsCount</td>
 							<td>@article.CommentCount</td>
 							<td>@(article.IsActive ? "Evet" : "Hayır")</td>
