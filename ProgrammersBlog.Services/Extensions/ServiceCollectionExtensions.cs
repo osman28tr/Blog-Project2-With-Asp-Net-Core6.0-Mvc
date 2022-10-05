@@ -36,7 +36,7 @@ namespace ProgrammersBlog.Services.Extensions
             }).AddEntityFrameworkStores<ProgrammersBlogContext>();
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
             serviceCollection.AddScoped<ICategoryService, CategoryManager>();
-            serviceCollection.AddScoped<ICommentService, CommentManager>();
+            //serviceCollection.AddScoped<ICommentService, CommentManager>();
             serviceCollection.AddScoped<IArticleService, ArticleManager>();
             
             return serviceCollection;

@@ -18,27 +18,27 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         private readonly IArticleService _articleService;
         private readonly ICommentService _commentService;
         private readonly UserManager<User> _userManager;
-        public HomeController(ICategoryService categoryService, IArticleService articleService, ICommentService commentService, UserManager<User> userManager)
+        public HomeController(ICategoryService categoryService, IArticleService articleService, /*ICommentService commentService*/UserManager<User> userManager)
         {
             _categoryService = categoryService;
             _articleService = articleService;
-            _commentService = commentService;
+            //_commentService = commentService;
             _userManager = userManager;
         }
         public async Task<IActionResult> AdminIndex()
         {
             var categoriesCountResult = await _categoryService.CountByIsDeleted();
             var articlesCountResult = await _articleService.CountByIsDeleted();
-            var commentsCountResult = await _commentService.CountByIsDeleted();
+            //var commentsCountResult = await _commentService.CountByIsDeleted();
             var usersCount = await _userManager.Users.CountAsync();
             var articleResult = await _articleService.GetAll();
-            if (categoriesCountResult.ResultStatus == ResultStatus.Success && articlesCountResult.ResultStatus == ResultStatus.Success && commentsCountResult.ResultStatus == ResultStatus.Success && usersCount > -1)
+            if (categoriesCountResult.ResultStatus == ResultStatus.Success && articlesCountResult.ResultStatus == ResultStatus.Success && /*commentsCountResult.ResultStatus == ResultStatus.Success &&*/ usersCount > -1)
             {
                 return View(new DashboardViewModel
                 {
                     CategoriesCount = categoriesCountResult.Data,
                     ArticlesCount = articlesCountResult.Data,
-                    CommentsCount = commentsCountResult.Data,
+                    CommentsCount = 0,
                     UsersCount = usersCount,
                     Articles = articleResult.Data
                 });

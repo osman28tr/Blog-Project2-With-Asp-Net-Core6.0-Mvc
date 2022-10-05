@@ -108,7 +108,7 @@
 							<td>@article.Category.Name</td>
 							<td>@article.Title</td>
 							<td><img src="~/img/@article.Thumbnail" class="my-image-table" /></td>
-							<td>@article.Date.ToShortDateString()</td>
+							<td>@article.Date.ToLongTimeString()</td>
 							<td>@article.ViewsCount</td>
 							<td>@article.CommentCount</td>
 							<td>@(article.IsActive ? "Evet" : "Hayır")</td>
