@@ -24,6 +24,12 @@ namespace ProgrammersBlog.Services.Concrete
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        /// <summary>
+        /// Verilen CategoryAddDto ve createdByName parametrelerine ait bilgilere göre yeni bir Category ekler.
+        /// </summary>
+        /// <param name="categoryAddDto">categoryAddDto tipinde eklenecek kategori bilgileri</param>
+        /// <param name="createdByName">string tipinde kullanıcının kullanıcı adı</param>
+        /// <returns>Asenkron bir operasyon ile Task olarak işlem sonucunu DataResult tipinde geriye döner.</returns>
         public async Task<IDataResult<CategoryDto>> AddAsync(CategoryAddDto categoryAddDto, string createdByName)
         {
             var category = _mapper.Map<Category>(categoryAddDto);
@@ -137,7 +143,11 @@ namespace ProgrammersBlog.Services.Concrete
             }
             return new DataResult<CategoryListDto>(ResultStatus.Error, Messages.Category.NotFound(isPlural: true), null);
         }
-
+        /// <summary>
+        /// Verilen ID parametresine ait kategorinin CategoryUpdateDto temsilini geriye döner.
+        /// </summary>
+        /// <param name="categoryId">0'dan büyük integer bir ID değeri</param>
+        /// <returns>Asenkron bir operasyon ile Task olarak işlem sonucunu DataResult tipinde geriye döner.</returns>
         public async Task<IDataResult<CategoryUpdateDto>> GetCategoryUpdateDtoAsync(int categoryId)
         {
             var result = await _unitOfWork.Categories.AnyAsync(x => x.Id == categoryId);
