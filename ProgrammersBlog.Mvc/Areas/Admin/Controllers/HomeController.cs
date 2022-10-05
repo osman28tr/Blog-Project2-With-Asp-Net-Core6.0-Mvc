@@ -27,11 +27,11 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         }
         public async Task<IActionResult> AdminIndex()
         {
-            var categoriesCountResult = await _categoryService.CountByNonDeleted();
-            var articlesCountResult = await _articleService.CountByNonDeleted();
+            var categoriesCountResult = await _categoryService.CountByNonDeletedAsync();
+            var articlesCountResult = await _articleService.CountByNonDeletedAsync();
             //var commentsCountResult = await _commentService.CountByNonDeleted();
             var usersCount = await _userManager.Users.CountAsync();
-            var articleResult = await _articleService.GetAll();
+            var articleResult = await _articleService.GetAllAsync();
             if (categoriesCountResult.ResultStatus == ResultStatus.Success && articlesCountResult.ResultStatus == ResultStatus.Success && /*commentsCountResult.ResultStatus == ResultStatus.Success &&*/ usersCount > -1)
             {
                 return View(new DashboardViewModel
