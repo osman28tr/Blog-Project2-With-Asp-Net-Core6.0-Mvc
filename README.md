@@ -1,1 +1,1 @@
-Kullancdığım veritabanı dosyası: ProgrammersBlog.bak
+Kullandığım veritabanı dosyası: ProgrammersBlog.bak
