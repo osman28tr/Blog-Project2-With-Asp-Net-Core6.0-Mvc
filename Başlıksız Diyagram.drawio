@@ -1,0 +1,55 @@
+<mxfile host="app.diagrams.net" modified="2024-02-10T11:16:47.062Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="pj0rm6iqRYbeaKRyxXqA" version="23.1.2" type="github">
+  <diagram name="Sayfa -1" id="VQKKQya93tAhQXvpIA6m">
+    <mxGraphModel dx="724" dy="390" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-1" value="Services Layer&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Repository Services&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Automapper&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Utilities&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;newEdgeStyle={&quot;edgeStyle&quot;:&quot;entityRelationEdgeStyle&quot;,&quot;startArrow&quot;:&quot;none&quot;,&quot;endArrow&quot;:&quot;none&quot;,&quot;segment&quot;:10,&quot;curved&quot;:1,&quot;sourcePerimeterSpacing&quot;:0,&quot;targetPerimeterSpacing&quot;:0};treeFolding=1;treeMoving=1;" vertex="1" parent="1">
+          <mxGeometry x="278" y="90" width="142" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-2" value="Data Layer&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Repositories&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Migrations,Contexts&lt;br&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;UnitofWork Pattern&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;newEdgeStyle={&quot;edgeStyle&quot;:&quot;entityRelationEdgeStyle&quot;,&quot;startArrow&quot;:&quot;none&quot;,&quot;endArrow&quot;:&quot;none&quot;,&quot;segment&quot;:10,&quot;curved&quot;:1,&quot;sourcePerimeterSpacing&quot;:0,&quot;targetPerimeterSpacing&quot;:0};treeFolding=1;treeMoving=1;" vertex="1" parent="1">
+          <mxGeometry x="275.5" y="220" width="147" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-3" value="Entity Layer&lt;br&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Entities&lt;br&gt;&lt;/span&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Dtos&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;newEdgeStyle={&quot;edgeStyle&quot;:&quot;entityRelationEdgeStyle&quot;,&quot;startArrow&quot;:&quot;none&quot;,&quot;endArrow&quot;:&quot;none&quot;,&quot;segment&quot;:10,&quot;curved&quot;:1,&quot;sourcePerimeterSpacing&quot;:0,&quot;targetPerimeterSpacing&quot;:0};treeFolding=1;treeMoving=1;" vertex="1" parent="1">
+          <mxGeometry x="274" y="350" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-4" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UD6T-WGSEc7sRgUkZWwd-1" target="UD6T-WGSEc7sRgUkZWwd-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="210" as="sourcePoint" />
+            <mxPoint x="470" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-5" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UD6T-WGSEc7sRgUkZWwd-2" target="UD6T-WGSEc7sRgUkZWwd-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="340" as="sourcePoint" />
+            <mxPoint x="520" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-6" value="Shared Layer&lt;br&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;EntityBases&lt;br&gt;Generic Repository&lt;br&gt;&lt;/span&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Utilities(ResultStates,Controller Extensions)&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;newEdgeStyle={&quot;edgeStyle&quot;:&quot;entityRelationEdgeStyle&quot;,&quot;startArrow&quot;:&quot;none&quot;,&quot;endArrow&quot;:&quot;none&quot;,&quot;segment&quot;:10,&quot;curved&quot;:1,&quot;sourcePerimeterSpacing&quot;:0,&quot;targetPerimeterSpacing&quot;:0};treeFolding=1;treeMoving=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="350" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="UD6T-WGSEc7sRgUkZWwd-3" target="UD6T-WGSEc7sRgUkZWwd-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="320" as="sourcePoint" />
+            <mxPoint x="520" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-8" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.076;entryY=0.235;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="UD6T-WGSEc7sRgUkZWwd-2" target="UD6T-WGSEc7sRgUkZWwd-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="460" y="330" as="sourcePoint" />
+            <mxPoint x="510" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-9" value="Asp.Net Core Mvc&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Models,Views,Controllers&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Areas, ViewComponents&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Helpers&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;newEdgeStyle={&quot;edgeStyle&quot;:&quot;entityRelationEdgeStyle&quot;,&quot;startArrow&quot;:&quot;none&quot;,&quot;endArrow&quot;:&quot;none&quot;,&quot;segment&quot;:10,&quot;curved&quot;:1,&quot;sourcePerimeterSpacing&quot;:0,&quot;targetPerimeterSpacing&quot;:0};treeFolding=1;treeMoving=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="90" width="142" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="UD6T-WGSEc7sRgUkZWwd-10" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="UD6T-WGSEc7sRgUkZWwd-9" target="UD6T-WGSEc7sRgUkZWwd-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="230" as="sourcePoint" />
+            <mxPoint x="250" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
