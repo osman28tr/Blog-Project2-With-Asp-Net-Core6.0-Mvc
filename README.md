@@ -12,13 +12,13 @@ Asp.Net Core Mvc, EntityFramework Core, N-Tier Architecture, AutoMapper, Ajax, M
 
 <h3>3. Proje Ekran Görüntüleri</h3>
 
-![programmersblog1](https://github.com/osman28tr/Blog-Project2-With-Asp-Net-Core6.0-Mvc/assets/83770616/6c6b650e-be8d-45b3-a32a-b14355cb6bbb)
+<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage1.png">
 
-![programmersblog2](https://github.com/osman28tr/Blog-Project2-With-Asp-Net-Core6.0-Mvc/assets/83770616/a6a03335-20d8-4965-a760-dfce47c2ffc7)
+<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage2.png">
 
-![programmersblog3](https://github.com/osman28tr/Blog-Project2-With-Asp-Net-Core6.0-Mvc/assets/83770616/acaa6873-cf10-4840-b097-593d0a437a55)
+<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage3.png">
 
-![programmersblog4](https://github.com/osman28tr/Blog-Project2-With-Asp-Net-Core6.0-Mvc/assets/83770616/91daa26d-a72a-4440-b341-ed093436a5e1)
+<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage4.png">
 
 <b>Not: </b> Kullandığım veritabanı dosyası(uygulamaya hazır entegre etmek isteyenler için): ProgrammersBlog.bak
 
