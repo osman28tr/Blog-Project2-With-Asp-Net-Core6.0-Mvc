@@ -8,17 +8,17 @@ Asp.Net Core Mvc, EntityFramework Core, N-Tier Architecture, AutoMapper, Ajax, M
 
 <h3>2. Projede Kullanılan Mimarinin Genel Hatları</h3>
 
-<img src="ProgrammersBlog.Mvc/wwwroot/ProjectArchImages/BlogArch1.PNG" height="340px">
+<img src="ProgrammersBlog.Mvc/wwwroot/ProjectArchImages/BlogArch1.PNG" height="450px" width="780px">
 
 <h3>3. Proje Ekran Görüntüleri</h3>
 
-<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage1.png">
+<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage1.png" height="450px" width="780px">
 
-<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage2.png">
+<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage2.png" height="450px" width="780px">
 
-<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage3.png">
+<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage3.png" height="450px" width="780px">
 
-<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage4.png">
+<img src="ProgrammersBlog.Mvc/wwwroot/ProjectScrennshots/BlogImage4.png" height="450px" width="780px">
 
 <h3>4. Kurulum: </h3>
  - Projede ProgrammersBlog.Mvc katmanında appsettings.json dosyasını açınız, ConnectionStrings kısmında belirtilen veritabanı bağlantı dizesini kendi veritabanı bağlantı dizenize göre güncelleyiniz.<br>
